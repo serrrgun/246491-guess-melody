@@ -1,7 +1,7 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
-* Студент: [Сергей Турищев](https://up.htmlacademy.ru/ecmascript/6/user/246491).
-* Наставник: `Неизвестно`.
+* Студент:   [Сергей Турищев](https://up.htmlacademy.ru/ecmascript/6/user/246491).
+* Наставник: [Никита Ткачук] (https://htmlacademy.ru/profile/id450211).
 
 ---
 
