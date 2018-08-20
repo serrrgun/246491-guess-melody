@@ -6,7 +6,8 @@ import {welcomeScreen} from "./welcome.js";
 
 
 const template = `
-<header class="game__header">
+  <section class="game game--artist">  
+    <header class="game__header">
       <a class="game__back" href="#">
         <span class="visually-hidden">Сыграть ещё раз</span>
         <img class="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию">
@@ -62,11 +63,9 @@ const template = `
         </div>
       </form>
     </section>
-`;
+  </section>`;
 
-const templateWrapperClass = `game game--artist`;
-
-const gameArtistScreen = render(template, templateWrapperClass);
+const gameArtistScreen = render(template);
 
 const gameArtistAnswerArray = gameArtistScreen.querySelectorAll(`.artist__input`);
 

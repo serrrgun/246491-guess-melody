@@ -1,8 +1,7 @@
-const render = (template, name) => {
-  const wrapper = document.createElement(`section`);
+const render = (template) => {
+  const wrapper = document.createElement(`template`);
   wrapper.innerHTML = template.trim();
-  wrapper.setAttribute(`class`, name);
-  return wrapper;
+  return wrapper.content;
 };
 
 const mainElement = document.querySelector(`.main`);
