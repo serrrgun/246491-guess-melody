@@ -68,17 +68,15 @@ const templateWrapperClass = `game game--artist`;
 
 const gameArtistScreen = render(template, templateWrapperClass);
 
-const gameArtistAnswerArray = Array.from(gameArtistScreen.querySelectorAll(`.artist__input`));
+const gameArtistAnswerArray = gameArtistScreen.querySelectorAll(`.artist__input`);
 
 const resultBlockArray = [gameResultScreen, gameFailTries, gameFailTime];
 
 const resultChange = resultBlockArray[Math.floor(Math.random() * resultBlockArray.length)];
 
-for (let i = 0; i < gameArtistAnswerArray.length; i++) {
-  gameArtistAnswerArray[i].addEventListener(`change`, () => {
-    changeScreen(resultChange);
-  });
-}
+[...gameArtistAnswerArray].forEach((item) => {
+  item.addEventListener(`change`, () => changeScreen(resultChange));
+});
 
 const gameBackButoon = gameArtistScreen.querySelector(`.game__back`);
 

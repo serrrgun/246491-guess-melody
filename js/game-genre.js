@@ -88,17 +88,18 @@ const gameGenreScreen = render(template, templateWrapperClass);
 const gameGenreButtonSubmit = gameGenreScreen.querySelector(`.game__submit`);
 gameGenreButtonSubmit.setAttribute(`disabled`, `disabled`);
 
-const gameCheckboxChangeArray = Array.from(gameGenreScreen.querySelectorAll(`.game__input`));
+const gameCheckboxChangeArray = gameGenreScreen.querySelectorAll(`.game__input`);
 
-for (let i = 0; i < gameCheckboxChangeArray.length; i++) {
-  gameCheckboxChangeArray[i].addEventListener(`change`, () => {
-    if (gameCheckboxChangeArray[i].checked) {
+
+[...gameCheckboxChangeArray].forEach((item) => {
+  item.addEventListener(`change`, () => {
+    if (item.checked) {
       gameGenreButtonSubmit.removeAttribute(`disabled`);
     } else {
       gameGenreButtonSubmit.setAttribute(`disabled`, `disabled`);
     }
   });
-}
+});
 
 gameGenreButtonSubmit.addEventListener(`click`, (evt) => {
   evt.preventDefault();
