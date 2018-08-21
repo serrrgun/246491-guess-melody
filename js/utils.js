@@ -4,12 +4,9 @@ const render = (template, name) => {
   wrapper.setAttribute(`class`, name);
   return wrapper;
 };
-
 const mainElement = document.querySelector(`.main`);
-
 const changeScreen = (element) => {
   mainElement.innerHTML = ``;
   mainElement.appendChild(element);
 };
-
 export {render, changeScreen};
