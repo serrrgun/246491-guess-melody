@@ -66,15 +66,13 @@ const template = `
         <label class="game__check" for="answer-4">Отметить</label>
       </div>
     </div>
-     <button class="game__submit button" type="submit">Ответить</button>
+     <button class="game__submit button" type="submit" disabled>Ответить</button>
   </form>
 </section>`;
 
 const templateWrapperClass = `game game--genre`;
 const gameGenreScreen = render(template, templateWrapperClass);
 const gameGenreButtonSubmit = gameGenreScreen.querySelector(`.game__submit`);
-
-gameGenreButtonSubmit.setAttribute(`disabled`, `disabled`);
 
 const gameCheckboxChangeArray = gameGenreScreen.querySelectorAll(`.game__input`);
 [...gameCheckboxChangeArray].forEach((item) => {
@@ -89,6 +87,7 @@ const gameCheckboxChangeArray = gameGenreScreen.querySelectorAll(`.game__input`)
 
 gameGenreButtonSubmit.addEventListener(`click`, (evt) => {
   evt.preventDefault();
+  gameGenreButtonSubmit.setAttribute(`disabled`, `disabled`);
   formGameGenre.reset();
   changeScreen(gameArtistScreen);
 });
