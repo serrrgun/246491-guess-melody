@@ -1,10 +1,10 @@
-const render = (template, name) => {
-  const wrapper = document.createElement(`section`);
+const render = (template) => {
+  const wrapper = document.createElement(`div`);
   wrapper.innerHTML = template.trim();
-  wrapper.setAttribute(`class`, name);
-  return wrapper;
+  return wrapper.firstChild;
 };
 const mainElement = document.querySelector(`.main`);
+
 const changeScreen = (element) => {
   mainElement.innerHTML = ``;
   mainElement.appendChild(element);
