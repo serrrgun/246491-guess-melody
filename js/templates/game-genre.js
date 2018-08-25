@@ -1,4 +1,4 @@
-import {render, changeScreen} from "./utils.js";
+import {render, changeScreen} from "../utils.js";
 import {gameArtistScreen} from "./game-artists.js";
 import welcomeScreen from "./welcome.js";
 

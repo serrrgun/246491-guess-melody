@@ -1,4 +1,4 @@
-import {render, changeScreen} from "./utils.js";
+import {render, changeScreen} from "../utils.js";
 import {gameResultScreen} from "./result-seccess.js";
 import {gameFailTries} from "./fail-tries.js";
 import {gameFailTime} from "./fail-time.js";

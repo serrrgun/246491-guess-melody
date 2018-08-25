@@ -1,4 +1,4 @@
-import {render, changeScreen} from "./utils.js";
+import {render, changeScreen} from "../utils.js";
 import {gameGenreScreen} from "./game-genre.js";
 
 const template = `
