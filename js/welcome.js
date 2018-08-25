@@ -14,8 +14,7 @@ const template = `
   <p class="welcome__text">Удачи!</p>
 </section>`;
 
-const templateWrapperClass = `welcome`;
-const welcomeScreen = render(template, templateWrapperClass);
+const welcomeScreen = render(template);
 const agreeButton = welcomeScreen.querySelector(`.welcome__button`);
 
 agreeButton.addEventListener(`click`, () => {
