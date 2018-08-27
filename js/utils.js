@@ -3,6 +3,7 @@ const render = (template) => {
   wrapper.innerHTML = template.trim();
   return wrapper.firstChild;
 };
+
 const mainElement = document.querySelector(`.main`);
 
 const changeScreen = (element) => {
