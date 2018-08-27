@@ -1,5 +1,5 @@
-import {render, changeScreen} from "../utils.js";
-import welcomeScreen from "./welcome.js";
+import {render, changeScreen} from "../utils";
+import welcomeScreen from "./welcome";
 
 
 const template = `
@@ -14,7 +14,8 @@ const gameFailTime = render(template);
 
 const againButton = gameFailTime.querySelector(`.result__replay`);
 
-againButton.addEventListener(`click`, () => {
+againButton.addEventListener(`click`, (evt) => {
+  evt.preventDefault();
   changeScreen(welcomeScreen);
 });
 

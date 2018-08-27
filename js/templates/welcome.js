@@ -1,5 +1,5 @@
-import {render, changeScreen} from "../utils.js";
-import gameGenreScreen from "./game-genre.js";
+import {render} from "../utils.js";
+import startGame from "../game/game";
 
 const template = `
 <section class="welcome">
@@ -13,12 +13,9 @@ const template = `
   </ul>
   <p class="welcome__text">Удачи!</p>
 </section>`;
-
 const welcomeScreen = render(template);
 const agreeButton = welcomeScreen.querySelector(`.welcome__button`);
-
 agreeButton.addEventListener(`click`, () => {
-  changeScreen(gameGenreScreen());
+  startGame();
 });
-
 export default welcomeScreen;
