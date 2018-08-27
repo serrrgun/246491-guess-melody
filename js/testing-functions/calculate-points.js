@@ -1,33 +1,33 @@
-const MAX_NUMBER_OF_REPLIES = 10;
-const FAST_TIME = 30;
+export const calculatePoints = (answersUsers, lives) => {
+  if (!Array.isArray(answersUsers)) {
+    throw new Error(`The first parameter must be an array`);
+  }
 
-const POINTS = {
-  LOOSE: -1,
-  DEFAULT: 1,
-  FAST: 2,
-  ERROR: -2
-};
+  if (typeof lives !== `number`) {
+    throw new Error(`The second parameter must be a number`);
+  }
 
-const calculatePoints = (answers, notes) => {
+  if (lives < 0) {
+    throw new Error(`The second parameter must be a positive number`);
+  }
+
+  if (answersUsers.length < 10 || lives === 0) {
+    return -1;
+  }
+
+  const BEST_TIME = 30;
   let points = 0;
-  if (answers.length < MAX_NUMBER_OF_REPLIES) {
-    return POINTS.LOOSE;
+
+  for (let answer of answersUsers) {
+    if (answer.result && answer.time >= BEST_TIME) {
+      points += 1;
+    } else if (answer.result && answer.time < BEST_TIME) {
+      points += 2;
+    } else if (!(answer.result)) {
+      points -= 2;
+    }
   }
-  if (notes < 0) {
-    throw new Error(`Notes should be >= 0`);
-  }
-  answers.forEach((answer) => {
-    if (answer.correct && answer.time < FAST_TIME) {
-      points += POINTS.FAST;
-    }
-    if (answer.correct && answer.time >= FAST_TIME) {
-      points += POINTS.DEFAULT;
-    }
-    if (!answer.correct) {
-      points += POINTS.ERROR;
-    }
-  });
+
   return points;
 };
 
-export {calculatePoints};

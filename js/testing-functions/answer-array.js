@@ -1,6 +1,6 @@
 const getUsersAnswer = (answerType, answerTime, count) => {
   let answers = new Array(count).fill({
-    correct: answerType,
+    result: answerType,
     time: answerTime
   });
   return answers;
