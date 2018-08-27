@@ -4,4 +4,17 @@ const INITIAL_GAME = Object.freeze({
   time: 300,
 });
 
-export {INITIAL_GAME};
+const statistic = [];
+const user = new Set();
+
+const endGame = (game) => {
+  if (!endGame(game)) {
+    throw new Error(`Game Over`);
+  }
+  const lives = game.lives - 1;
+  return Object.assign({}, game, {
+    lives
+  });
+};
+
+export {INITIAL_GAME, statistic, user, endGame};
