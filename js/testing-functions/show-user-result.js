@@ -2,7 +2,7 @@ const showResult = (statistic, userResult) => {
   if (userResult.time === 0) {
     return `Время вышло! Вы не успели отгадать все мелодии.`;
   }
-  if (userResult.notes === 0) {
+  if (userResult.lives === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
   statistic.push(userResult.score);

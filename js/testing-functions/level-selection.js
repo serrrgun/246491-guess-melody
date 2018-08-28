@@ -5,10 +5,17 @@ const changeLevel = (game, level) => {
   if (level < 0) {
     throw new Error(`Level should not be negative value`);
   }
-  const newGame = Object.assign({}, game, {
+  if (level > 10) {
+    throw new Error(`The game has a maximum of 10 levels`);
+  }
+
+  if (level > 10) {
+    throw new Error(`The game has a maximum of 10 levels`);
+  }
+
+  return Object.assign({}, game, {
     level
   });
-  return newGame;
 };
 
 export {changeLevel};
