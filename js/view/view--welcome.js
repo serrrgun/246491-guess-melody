@@ -1,10 +1,6 @@
 import View from './view';
 
 export default class ViewWelcome extends View {
-  constructor() {
-    super();
-  }
-
   get template() {
     return `
     <section class="welcome">
@@ -27,4 +23,4 @@ export default class ViewWelcome extends View {
   }
 
   onPlayClick() {}
-};
+}

@@ -1,13 +1,10 @@
 import View from './view';
 
 export default class ViewModalWarning extends View {
-  constructor() {
-    super();
-  }
 
   get template() {
     return `
-    <section class="modal modal--hidden">
+    <section class="modal">
       <button class="modal__close" type="button"><span class="visually-hidden">Закрыть</span></button>
       <h2 class="modal__title">Подтверждение</h2>
       <p class="modal__text">Вы уверены что хотите начать игру заново?</p>
@@ -18,22 +15,24 @@ export default class ViewModalWarning extends View {
     </section>`;
   }
 
-  bind () {
-    const closeButtonCansel = this.element.querySelector(`.modal__button:first-child`);
+  bind() {
     const closeButtonCross = this.element.querySelector(`.modal__close`);
-    const closeButtonConfirm = this.element.querySelector(`.modal__button:last-child`);
+    const closeButtonCancel = this.element.querySelector(`.modal__button:last-child`);
+    const closeButtonConfirm = this.element.querySelector(`.modal__button:first-child`);
 
-    const canselHandler = (evt) => {
-      evt.stopPropagation();
+    const cancelHandler = (evt) => {
       evt.preventDefault();
 
       this.onCancel();
     };
 
-    closeButtonCansel.addEventListener(`click`, canselHandler);
-    closeButtonCross.addEventListener(`click`, canselHandler);
+    closeButtonCancel.addEventListener(`click`, cancelHandler);
+    closeButtonCross.addEventListener(`click`, cancelHandler);
 
-    closeButtonConfirm.addEventListener(`click`, this.onConfirm);
+    closeButtonConfirm.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      this.onConfirm();
+    });
   }
 
   onCancel() {

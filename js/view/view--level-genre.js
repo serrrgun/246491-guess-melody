@@ -1,54 +1,79 @@
 import View from './view';
 
 export default class ViewLevelGenre extends View {
-  constructor() {
+  constructor(level) {
     super();
+
+    this.level = level;
   }
 
   get template() {
     return `
     <section class="game game--genre">
       <section class="game__screen">
-        <h2 class="game__title">${level.title}</h2>
+        <h2 class="game__title">${this.level.title}</h2>
         <form class="game__tracks">
-           ${level.questions.map((question, it) => `
-              <div class="track">
-                <button class="track__button track__button--play" type="button"></button>
-                <div class="track__status">
-                  <audio src="${question.src}"></audio>
-                </div>
-                <div class="game__answer">
-                  <input class="game__input visually-hidden" type="checkbox" name="answer" value="${question.genre}" id="answer-${it}">
-                  <label class="game__check" for="answer-${it}">Отметить</label>
-                </div>
-              </div>`.trim()).join(``)}
-    
-          <button class="game__submit button" type="submit" disabled>Ответить</button>
+           ${this.level.questions.map((question, it) => this.templateAnswer(question, it).trim()).join(``)}
+           <button class="game__submit button" type="submit" disabled>Ответить</button>
         </form>
       </section>
     </section>`;
   }
 
-  setStateSendButton() {
-    let anyCheckboxChecked = false;
-    for (const checkbox of this.checkboxCollection) {
-      if (checkbox.checked) {
-        anyCheckboxChecked = true;
-      }
-    }
-    this.sendButton.disabled = !anyCheckboxChecked;
+  templateAnswer(question, it) {
+    return `
+      <div class="track">
+        <button class="track__button track__button--play" type="button"></button>
+        <div class="track__status">
+          <audio src="${question.src}"></audio>
+        </div>
+        <div class="game__answer">
+          <input class="game__input visually-hidden" type="checkbox" name="answer" value="${question.genre}" id="answer-${it}">
+          <label class="game__check" for="answer-${it}">Отметить</label>
+        </div>
+      </div>`;
   }
 
   bind() {
-    this.sendButton = this.element.querySelector(`.game__submit`);
-    this.checkboxCollection = this.element.querySelectorAll(`.game__tracks`);
+    const sendButton = this.element.querySelector(`.game__submit`);
+    const gameGenreForm = this.element.querySelector(`.game__tracks`);
+    const gameGenreAnswers = [...gameGenreForm.elements.answer];
 
-    for (const checkbox of this.checkboxCollection) {
-      checkbox.addEventListener(`change`, this.setStateSendButton.bind(this));
-    }
+    const playButtons = [...this.element.querySelectorAll(`.track__button`)];
+    const musicsPlayers = [...this.element.querySelectorAll(`audio`)];
 
-    this.sendButton.addEventListener(`click`, this.onClickSendButton);
+    playButtons.forEach((btn, index) => {
+      btn.addEventListener(`click`, (event) => {
+        event.preventDefault();
+
+        if (btn.classList.contains(`track__button--pause`)) {
+          btn.classList.remove(`track__button--pause`);
+          musicsPlayers[index].pause();
+        } else {
+          for (let i = 0; i < playButtons.length; i++) {
+            playButtons[i].classList.remove(`track__button--pause`);
+            musicsPlayers[i].pause();
+          }
+
+          btn.classList.add(`track__button--pause`);
+          musicsPlayers[index].play();
+        }
+      });
+    });
+
+    gameGenreAnswers.forEach((it) => {
+      it.addEventListener(`change`, () => {
+        sendButton.disabled = !(gameGenreAnswers.some((item) => item.checked));
+      });
+    });
+
+    sendButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      this.onAnswerClick(gameGenreAnswers);
+      gameGenreForm.reset();
+      sendButton.disabled = true;
+    });
   }
 
-  onClickSendButton() {}
+  onAnswerClick() {}
 }

@@ -1,9 +1,6 @@
 import View from './view';
 
 export default class ViewResultFail extends View {
-  constructor() {
-    super();
-  }
 
   get template() {
     return `
