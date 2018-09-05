@@ -29,6 +29,20 @@ const updateGame = (state, level) => {
   changeScreen(level.element);
 };
 
+const answerValidation = (answer) => {
+  if (answer) {
+    user.add({result: true, time: TIME});
+  } else {
+    try {
+      game = reductionLives(game);
+      user.add({result: false, time: TIME});
+    } catch (e) {
+      changeScreen(screenResultFail());
+      return;
+    }
+  }
+};
+
 const genreGameLevel = (level) => {
   const gameLevel = new ViewLevelGenre(level);
 
@@ -36,18 +50,8 @@ const genreGameLevel = (level) => {
     const userAnswers = answers.filter((it) => it.checked);
     const result = userAnswers.some((it) => it.value === level.answer);
 
-    if (result) {
-      user.add({result: true, time: TIME});
-    } else {
-      try {
-        game = reductionLives(game);
-        user.add({result: false, time: TIME});
-        updateGame(game, gameLevel);
-      } catch (e) {
-        changeScreen(screenResultFail());
-        return;
-      }
-    }
+    answerValidation(result);
+
     game = changeLevel(game);
     updateGame(game, artistGameLevel(SONGS[game.level]));
   };
@@ -59,18 +63,9 @@ const artistGameLevel = (level) => {
   const gameLevel = new ViewLevelArtist(level);
 
   gameLevel.onAnswerClick = (answer) => {
-    if (answer.value === SONGS[game.level].question.name) {
-      user.add({result: true, time: TIME});
-    } else {
-      try {
-        game = reductionLives(game);
-        updateGame(game, gameLevel);
-        user.add({result: false, time: TIME});
-      } catch (e) {
-        changeScreen(screenResultFail());
-        return;
-      }
-    }
+
+    answerValidation(answer.value === SONGS[game.level].question.name);
+
     game = changeLevel(game);
     if (SONGS[game.level]) {
       updateGame(game, genreGameLevel(SONGS[game.level]));
