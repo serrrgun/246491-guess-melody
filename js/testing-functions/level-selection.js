@@ -1,21 +1,11 @@
-const changeLevel = (game, level) => {
-  if (typeof level !== `number`) {
-    throw new Error(`Level should be of type number`);
-  }
-  if (level < 0) {
-    throw new Error(`Level should not be negative value`);
-  }
-  if (level > 10) {
-    throw new Error(`The game has a maximum of 10 levels`);
-  }
+const changeLevel = (user) => {
+  const newLevel = Object.assign({}, user);
+  newLevel.level += 1;
 
-  if (level > 10) {
-    throw new Error(`The game has a maximum of 10 levels`);
+  if (newLevel.level > 10) {
+    throw new Error(`End Levels`);
   }
-
-  return Object.assign({}, game, {
-    level
-  });
+  return newLevel;
 };
 
 export {changeLevel};

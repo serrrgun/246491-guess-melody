@@ -10,6 +10,7 @@ import {reductionLives} from '../testing-functions/reduction-lives';
 import screenResultSucces from './screen--result-secces';
 import {calculatePoints} from '../testing-functions/calculate-points';
 import {showResult} from '../testing-functions/show-user-result';
+import {changeLevel} from '../testing-functions/level-selection';
 
 const TIME = 35;
 let game = Object.assign({}, INITIAL_GAME);
@@ -47,8 +48,8 @@ const genreGameLevel = (level) => {
         return;
       }
     }
-    updateGame(game, artistGameLevel(SONGS[++game.level]));
-
+    game = changeLevel(game);
+    updateGame(game, artistGameLevel(SONGS[game.level]));
   };
   return gameLevel;
 };
@@ -70,8 +71,8 @@ const artistGameLevel = (level) => {
         return;
       }
     }
-
-    if (SONGS[++game.level]) {
+    game = changeLevel(game);
+    if (SONGS[game.level]) {
       updateGame(game, genreGameLevel(SONGS[game.level]));
     } else {
       const resultGame = {
