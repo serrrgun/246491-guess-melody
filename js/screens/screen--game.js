@@ -29,31 +29,48 @@ const updateGame = (state, level) => {
   changeScreen(level.element);
 };
 
-const answerValidation = (answer) => {
-  if (answer) {
-    user.add({result: true, time: TIME});
-  } else {
-    try {
-      game = reductionLives(game);
-      user.add({result: false, time: TIME});
-    } catch (e) {
-      changeScreen(screenResultFail());
-      return;
-    }
-  }
-};
-
 const genreGameLevel = (level) => {
   const gameLevel = new ViewLevelGenre(level);
 
   gameLevel.onAnswerClick = (answers) => {
     const userAnswers = answers.filter((it) => it.checked);
-    const result = userAnswers.some((it) => it.value === level.answer);
+    const correctResult = userAnswers.some((it) => it.value === level.answer);
 
-    answerValidation(result);
-
+    if (correctResult) {
+      user.add({result: true, time: TIME});
+    } else {
+      try {
+        game = reductionLives(game);
+        user.add({result: false, time: TIME});
+        updateGame(game, gameLevel);
+      } catch (e) {
+        changeScreen(screenResultFail());
+        return;
+      }
+    }
     game = changeLevel(game);
-    updateGame(game, artistGameLevel(SONGS[game.level]));
+
+    if (SONGS[game.level]) {
+      switch (SONGS[game.level].type) {
+        case `genre`:
+          updateGame(game, genreGameLevel(SONGS[game.level]));
+          break;
+        case `artist`:
+          updateGame(game, artistGameLevel(SONGS[game.level]));
+          break;
+        case `end`:
+          const resultGame = {
+            score: calculatePoints([...user], game.lives),
+            lives: game.lives,
+            time: TIME,
+          };
+          changeScreen(screenResultSucces(showResult(statistic, resultGame), resultGame.score, game));
+          break;
+        default:
+          throw new Error(`Unknown Level`);
+      }
+    }
+
   };
   return gameLevel;
 };
@@ -63,19 +80,42 @@ const artistGameLevel = (level) => {
   const gameLevel = new ViewLevelArtist(level);
 
   gameLevel.onAnswerClick = (answer) => {
+    const correctResult = answer.value === level.question.name;
 
-    answerValidation(answer.value === SONGS[game.level].question.name);
-
-    game = changeLevel(game);
-    if (SONGS[game.level]) {
-      updateGame(game, genreGameLevel(SONGS[game.level]));
+    if (correctResult) {
+      user.add({result: true, time: TIME});
     } else {
-      const resultGame = {
-        score: calculatePoints([...user], game.lives),
-        lives: game.lives,
-        time: TIME,
-      };
-      changeScreen(screenResultSucces(showResult(statistic, resultGame), resultGame.score, game));
+      try {
+        game = reductionLives(game);
+        updateGame(game, gameLevel);
+        user.add({result: false, time: TIME});
+      } catch (e) {
+        changeScreen(screenResultFail());
+        return;
+      }
+    }
+    game = changeLevel(game);
+
+
+    if (SONGS[game.level]) {
+      switch (SONGS[game.level].type) {
+        case `genre`:
+          updateGame(game, genreGameLevel(SONGS[game.level]));
+          break;
+        case `artist`:
+          updateGame(game, artistGameLevel(SONGS[game.level]));
+          break;
+        case `end`:
+          const resultGame = {
+            score: calculatePoints([...user], game.lives),
+            lives: game.lives,
+            time: TIME,
+          };
+          changeScreen(screenResultSucces(showResult(statistic, resultGame), resultGame.score, game));
+          break;
+        default:
+          throw new Error(`Unknown Level`);
+      }
     }
   };
   return gameLevel;

@@ -1,6 +1,7 @@
 // Music from https://www.youtube.com/audiolibrary/music?feature=blog
 export const SONGS = [
   {
+    type: `genre`,
     title: `Выберите Jazz`,
     questions: [
       {
@@ -35,39 +36,7 @@ export const SONGS = [
     answer: `Jazz`
   },
   {
-    title: `Кто исполняет эту песню?`,
-    question: {
-      artist: `Quincas Moreira`,
-      name: `Firefly`,
-      image: `http://www.atribuna.com.br/fileadmin/_processed_/csm_Quincas-Moreira-Foto-Divulgacao_76d1a8b00e.jpg`,
-      src: `https://www.youtube.com/audiolibrary_download?vid=79100e44c826e2f7`,
-      genre: `Electronic`,
-    },
-    answers: [
-      {
-        artist: `Riot`,
-        name: `Level Plane`,
-        image: `https://i.ytimg.com/vi/jzgM3m8Vp1k/maxresdefault.jpg`,
-        src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
-        genre: `R&B`,
-      },
-      {
-        artist: `Quincas Moreira`,
-        name: `Firefly`,
-        image: `http://www.atribuna.com.br/fileadmin/_processed_/csm_Quincas-Moreira-Foto-Divulgacao_76d1a8b00e.jpg`,
-        src: `https://www.youtube.com/audiolibrary_download?vid=79100e44c826e2f7`,
-        genre: `Electronic`,
-      },
-      {
-        artist: `Jingle Punks`,
-        name: `Lucky Day`,
-        image: `https://i.vimeocdn.com/portrait/992615_300x300`,
-        src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
-        genre: `Pop`,
-      },
-    ]
-  },
-  {
+    type: `genre`,
     title: `Выберите Rock`,
     questions: [
       {
@@ -102,6 +71,42 @@ export const SONGS = [
     answer: `Rock`
   },
   {
+    type: `artist`,
+    title: `Кто исполняет эту песню?`,
+    question: {
+      artist: `Quincas Moreira`,
+      name: `Firefly`,
+      image: `http://www.atribuna.com.br/fileadmin/_processed_/csm_Quincas-Moreira-Foto-Divulgacao_76d1a8b00e.jpg`,
+      src: `https://www.youtube.com/audiolibrary_download?vid=79100e44c826e2f7`,
+      genre: `Electronic`,
+    },
+    answers: [
+      {
+        artist: `Riot`,
+        name: `Level Plane`,
+        image: `https://i.ytimg.com/vi/jzgM3m8Vp1k/maxresdefault.jpg`,
+        src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
+        genre: `R&B`,
+      },
+      {
+        artist: `Quincas Moreira`,
+        name: `Firefly`,
+        image: `http://www.atribuna.com.br/fileadmin/_processed_/csm_Quincas-Moreira-Foto-Divulgacao_76d1a8b00e.jpg`,
+        src: `https://www.youtube.com/audiolibrary_download?vid=79100e44c826e2f7`,
+        genre: `Electronic`,
+      },
+      {
+        artist: `Jingle Punks`,
+        name: `Lucky Day`,
+        image: `https://i.vimeocdn.com/portrait/992615_300x300`,
+        src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
+        genre: `Pop`,
+      },
+    ]
+  },
+
+  {
+    type: `artist`,
     title: `Кто исполняет эту песню?`,
     question: {
       artist: `Riot`,
@@ -135,6 +140,7 @@ export const SONGS = [
     ]
   },
   {
+    type: `genre`,
     title: `Выберите Country`,
     questions: [
       {
@@ -169,6 +175,7 @@ export const SONGS = [
     answer: `Country`
   },
   {
+    type: `artist`,
     title: `Кто исполняет эту песню?`,
     question: {
       artist: `Riot`,
@@ -202,6 +209,7 @@ export const SONGS = [
     ]
   },
   {
+    type: `genre`,
     title: `Выберите Pop`,
     questions: [
       {
@@ -236,6 +244,7 @@ export const SONGS = [
     answer: `Pop`
   },
   {
+    type: `artist`,
     title: `Кто исполняет эту песню?`,
     question: {
       artist: `Riot`,
@@ -269,6 +278,7 @@ export const SONGS = [
     ]
   },
   {
+    type: `genre`,
     title: `Выберите Jazz`,
     questions: [
       {
@@ -303,6 +313,7 @@ export const SONGS = [
     answer: `Jazz`
   },
   {
+    type: `artist`,
     title: `Кто исполняет эту песню?`,
     question: {
       artist: `Riot`,
@@ -335,4 +346,5 @@ export const SONGS = [
       },
     ]
   },
+  {type: `end`},
 ];
