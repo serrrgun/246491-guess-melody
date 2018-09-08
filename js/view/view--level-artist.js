@@ -1,9 +1,13 @@
 import View from './view';
+import {DEBAG, DEBUG_STYLE_ARTIST} from "../setting";
+
+
 
 export default class ViewLevelArtist extends View {
   constructor(level) {
     super();
-
+    this.debag = DEBAG;
+    this.debagStyle = DEBUG_STYLE_ARTIST;
     this.level = level;
   }
 
@@ -27,7 +31,7 @@ export default class ViewLevelArtist extends View {
     return `
       <div class="artist">
         <input class="artist__input visually-hidden" type="radio" name="answer" value="${answer.name}" id="answer-${it}">
-        <label class="artist__name" for="answer-${it}">
+        <label class="artist__name" ${this.debag && this.level.question.name === answer.name ? this.debagStyle : ``}  for="answer-${it}">
           <img class="artist__picture" src="${answer.image}" alt="${answer.name}">
           ${answer.name}
         </label>

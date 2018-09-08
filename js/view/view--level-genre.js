@@ -1,9 +1,11 @@
 import View from './view';
+import {DEBAG, DEBUG_STYLE_GENRE} from "../setting";
 
 export default class ViewLevelGenre extends View {
   constructor(level) {
     super();
-
+    this.debag = DEBAG;
+    this.debagStyle = DEBUG_STYLE_GENRE;
     this.level = level;
   }
 
@@ -29,7 +31,7 @@ export default class ViewLevelGenre extends View {
         </div>
         <div class="game__answer">
           <input class="game__input visually-hidden" type="checkbox" name="answer" value="${question.genre}" id="answer-${it}">
-          <label class="game__check" for="answer-${it}">Отметить</label>
+          <label class="game__check" ${this.debag && question.genre === this.level.answer ? this.debagStyle : ``} for="answer-${it}">Отметить</label>
         </div>
       </div>`;
   }

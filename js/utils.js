@@ -10,4 +10,4 @@ const changeScreen = (element) => {
   mainElement.innerHTML = ``;
   mainElement.appendChild(element);
 };
-export {render, changeScreen};
+export {render, changeScreen, mainElement};

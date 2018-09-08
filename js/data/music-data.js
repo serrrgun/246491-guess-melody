@@ -35,6 +35,7 @@ export const SONGS = [
     ],
     answer: `Jazz`
   },
+
   {
     type: `genre`,
     title: `Выберите Rock`,
@@ -104,7 +105,6 @@ export const SONGS = [
       },
     ]
   },
-
   {
     type: `artist`,
     title: `Кто исполняет эту песню?`,
@@ -346,5 +346,4 @@ export const SONGS = [
       },
     ]
   },
-  {type: `end`},
 ];
