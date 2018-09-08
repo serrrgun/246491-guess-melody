@@ -70,7 +70,7 @@ export default class GameScreen {
     this.header = new ViewHeader(this.model.state);
     this.level.element.replaceChild(this.header.element, this.level.element.firstElementChild);
     this.header.element.restartGame = this.bind();
-    //this.header.element.timeEnd = this.endGame();
+    // this.header.element.timeEnd = this.endGame();
   }
 
   levelType(level) {

@@ -1,8 +1,6 @@
 import View from './view';
 import {DEBAG, DEBUG_STYLE_ARTIST} from "../setting";
 
-
-
 export default class ViewLevelArtist extends View {
   constructor(level) {
     super();
