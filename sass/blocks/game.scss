@@ -143,4 +143,28 @@
 .game__artist {
   display: flex;
   justify-content: space-between;
+  animation: i;
+}
+
+
+@keyframes debagAnimation {
+  from {
+    //transform: scale(1.2);
+    background-color: rgba(210, 255, 82, 1);
+  }
+
+  50% {
+    //transform: scale(1.4);
+    background-color: rgba(145, 232, 66, 1);
+  }
+
+  70% {
+    //transform: scale(1.4);
+    background-color: rgba(145, 232, 66, 1);
+  }
+
+  to {
+    //transform: scale(1);
+    background-color: rgba(145, 232, 66, 1);
+  }
 }

@@ -1,4 +1,3 @@
-import {changeScreen} from './utils';
-import screenWelcome from './screens/screen--welcome';
+import Router from './router';
 
-changeScreen(screenWelcome());
+Router.showWelcome();

@@ -1,6 +1,6 @@
 import View from './view';
 
-export default class ViewModalWarning extends View {
+export default class ViewModalReset extends View {
 
   get template() {
     return `
