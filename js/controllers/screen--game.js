@@ -85,12 +85,7 @@ export default class GameScreen {
   }
 
   changeLevel(level) {
-    if (level instanceof ViewLevelGenre) {
-      level.onAnswerClick = this.answerGenre.bind(this);
-    }
-    if (level instanceof ViewLevelArtist) {
-      level.onAnswerClick = this.answerArtist.bind(this);
-    }
+    level.onAnswerClick = this.answerLevel.bind(this);
     this.changeLevelContent(level);
   }
 
@@ -104,7 +99,6 @@ export default class GameScreen {
       this.model.nextLevel();
       this.levelType(this.model.levelGame);
       this.changeLevel(this.level);
-      this.updateHeader();
       this.startTimer();
     } else {
       this.model.result = {
@@ -116,30 +110,9 @@ export default class GameScreen {
     }
   }
 
-  answerGenre(answers) {
+  answerLevel(answer) {
     this.stopTimer();
-    const userAnswers = answers.filter((it) => it.checked);
-    const correctResult = userAnswers.some((it) => it.value === this.model.levelGame.answer);
-
-    if (correctResult) {
-      user.add({result: true, time: this.model.state.time});
-    } else {
-      try {
-        this.model.die();
-        user.add({result: false, time: this.model.state.time});
-      } catch (e) {
-        Router.showFailTries();
-        return;
-      }
-    }
-    this.validateLevel();
-  }
-
-  answerArtist(answer) {
-    this.stopTimer();
-    const correctResult = answer.value === this.model.levelGame.question.name;
-
-    if (correctResult) {
+    if (answer) {
       user.add({result: true, time: this.model.state.time});
     } else {
       try {

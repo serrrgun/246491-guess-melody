@@ -57,8 +57,8 @@ export default class ViewLevelArtist extends View {
     for (const answer of gameArtistAnswers) {
       answer.addEventListener(`click`, (event) => {
         event.preventDefault();
-
-        this.onAnswerClick(answer);
+        const correctResult = answer.value === this.level.question.name;
+        this.onAnswerClick(correctResult);
 
         gameArtistForm.reset();
       });

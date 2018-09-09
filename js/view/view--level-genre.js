@@ -71,7 +71,8 @@ export default class ViewLevelGenre extends View {
 
     sendButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.onAnswerClick(gameGenreAnswers);
+      const userAnswers = gameGenreAnswers.filter((it) => it.checked).some((it) => it.value === this.level.answer);
+      this.onAnswerClick(userAnswers);
       gameGenreForm.reset();
       sendButton.disabled = true;
     });
