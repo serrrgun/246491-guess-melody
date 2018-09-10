@@ -22,7 +22,6 @@ export default class ViewModalReset extends View {
 
     const cancelHandler = (evt) => {
       evt.preventDefault();
-
       this.onCancel();
     };
 
