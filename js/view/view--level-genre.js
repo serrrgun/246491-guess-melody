@@ -43,6 +43,12 @@ export default class ViewLevelGenre extends View {
 
     const playButtons = [...this.element.querySelectorAll(`.track__button`)];
     const musicsPlayers = [...this.element.querySelectorAll(`audio`)];
+    playButtons[0].classList.add(`track__button--pause`);
+    const promise = musicsPlayers[0].play();
+
+    if (promise) {
+      promise.catch(() => {});
+    }
 
     playButtons.forEach((btn, index) => {
       btn.addEventListener(`click`, (event) => {
@@ -58,7 +64,7 @@ export default class ViewLevelGenre extends View {
           }
 
           btn.classList.add(`track__button--pause`);
-          musicsPlayers[index].play();
+          musicsPlayers[index].play().catch(() => ({}));
         }
       });
     });
