@@ -7,8 +7,6 @@ import {user, SECOND} from '../data/game-data';
 import {calculatePoints} from '../bisness-logic/calculate-points';
 import {mainElement} from '../utils';
 
-
-
 export default class GameScreen {
   constructor(model) {
     this.model = model;
