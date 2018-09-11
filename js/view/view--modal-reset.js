@@ -16,23 +16,34 @@ export default class ViewModalReset extends View {
   }
 
   bind() {
-    const closeButtonCross = this.element.querySelector(`.modal__close`);
-    const closeButtonCancel = this.element.querySelector(`.modal__button:last-child`);
-    const closeButtonConfirm = this.element.querySelector(`.modal__button:first-child`);
+    const closeButton = this.element.querySelector(`.modal__close`);
+    const cancelButton = this.element.querySelector(`.modal__button:last-child`);
+    const confirmButton = this.element.querySelector(`.modal__button:first-child`);
 
-    const cancelHandler = (evt) => {
-      evt.preventDefault();
-      this.onCancel();
-    };
-
-    closeButtonCancel.addEventListener(`click`, cancelHandler);
-    closeButtonCross.addEventListener(`click`, cancelHandler);
-
-    closeButtonConfirm.addEventListener(`click`, (evt) => {
+    confirmButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       this.onConfirm();
     });
+
+    cancelButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      this.onCancel();
+    });
+
+    closeButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      this.onCancel();
+    });
   }
+
+  showModal() {
+    document.body.appendChild(this.element);
+  }
+
+  closeModal() {
+    document.body.removeChild(document.body.lastElementChild);
+  }
+
 
   onCancel() {
 

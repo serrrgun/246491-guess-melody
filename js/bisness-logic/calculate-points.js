@@ -1,3 +1,5 @@
+import {INITIAL_GAME} from "../data/game-data";
+
 export const calculatePoints = (answersUsers, lives) => {
   if (!Array.isArray(answersUsers)) {
     throw new Error(`The first parameter must be an array`);
@@ -14,14 +16,13 @@ export const calculatePoints = (answersUsers, lives) => {
   if (answersUsers.length < 10 || lives === 0) {
     return -1;
   }
-
   const BEST_TIME = 30;
   let points = 0;
 
   for (let answer of answersUsers) {
-    if (answer.result && answer.time >= BEST_TIME) {
+    if (answer.result && INITIAL_GAME.time - answer.time >= BEST_TIME) {
       points += 1;
-    } else if (answer.result && answer.time < BEST_TIME) {
+    } else if (answer.result && INITIAL_GAME.time - answer.time < BEST_TIME) {
       points += 2;
     } else if (!(answer.result)) {
       points -= 2;

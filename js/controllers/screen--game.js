@@ -1,11 +1,12 @@
 import ViewHeader from '../view/view--header';
 import ViewLevelArtist from '../view/view--level-artist';
 import ViewLevelGenre from '../view/view--level-genre';
+import ViewModalReset from '../view/view--modal-reset';
 import Router from '../router';
 import {user, SECOND} from '../data/game-data';
 import {calculatePoints} from '../bisness-logic/calculate-points';
 import {mainElement} from '../utils';
-import ResetModalScreen from "./screen--modal-reset";
+
 
 
 export default class GameScreen {
@@ -17,7 +18,7 @@ export default class GameScreen {
 
   init() {
     this.header = new ViewHeader(this.model.state);
-    this.modal = new ResetModalScreen();
+    this.modal = new ViewModalReset();
     this.levelType(this.model.levelGame);
     this.mainElement = mainElement;
     this.second = SECOND;
@@ -53,10 +54,23 @@ export default class GameScreen {
     user.clear();
   }
 
+  showModal() {
+    this.modal.showModal();
+    this.modal.onConfirm = () => {
+      this.stopTimer();
+      Router.start();
+      this.modal.closeModal();
+    };
+    this.modal.onCancel = () => {
+      this.modal.closeModal();
+      this.startTimer();
+    };
+  }
+
   bind() {
     this.header.restartGame = () => {
-      this.modal.element.classList.remove(`modal--hidden`);
-      this.level.element.insertBefore(this.modal.element, this.root.element);
+      this.showModal();
+      this.stopTimer();
     };
   }
 

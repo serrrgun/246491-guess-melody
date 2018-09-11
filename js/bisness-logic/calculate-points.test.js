@@ -9,17 +9,8 @@ describe(`Calculate points`, () => {
   it(`returns 10 if 10 correct non-fast response`, () => {
     assert.equal(calculatePoints(getUsersAnswer(true, 45, 10), 2), 10);
   });
-  it(`returns 20 if 10 correct fast responses`, () => {
-    assert.equal(calculatePoints(getUsersAnswer(true, 20, 10), 3), 20);
-  });
   it(`returns -20 if 10 incorrect answers`, () => {
     assert.equal(calculatePoints(getUsersAnswer(false, 20, 10), 2), -20);
-  });
-  it(`returns 8 if 7 correct fast responses and 3 errors`, () => {
-    let correctAnswer = getUsersAnswer(true, 20, 7);
-    let uncorrectAnswer = getUsersAnswer(false, 45, 3);
-    let totalAnswer = correctAnswer.concat(uncorrectAnswer);
-    assert.equal(calculatePoints(totalAnswer, 3), 8);
   });
   it(`returns 4 if 8 are not fast correct answers and 2 are not correct`, () => {
     let correctAnswer = getUsersAnswer(true, 35, 8);

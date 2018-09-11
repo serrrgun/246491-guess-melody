@@ -13,10 +13,10 @@ export default class ViewLevelArtist extends View {
     return `
     <section class="game game--artist">
       <section class="game__screen">
-        <h2 class="game__title">${this.level.title}</h2>
+        <h2 class="game__title">${this.level.question}</h2>
         <div class="game__track">
           <button class="track__button track__button--play track__button--pause" type="button"></button>
-          <audio src="${this.level.question.src}" autoplay></audio>
+          <audio src="${this.level.src}" autoplay></audio>
         </div>
         <form class="game__artist">
           ${this.level.answers.map((answer, it) => this.templateAnswer(answer, it).trim()).join(``)}
@@ -28,10 +28,10 @@ export default class ViewLevelArtist extends View {
   templateAnswer(answer, it) {
     return `
       <div class="artist">
-        <input class="artist__input visually-hidden" type="radio" name="answer" value="${answer.name}" id="answer-${it}">
-        <label class="artist__name" ${this.debag && this.level.question.name === answer.name ? this.debagStyle : ``}  for="answer-${it}">
-          <img class="artist__picture" src="${answer.image}" alt="${answer.name}">
-          ${answer.name}
+        <input class="artist__input visually-hidden" type="radio" name="answer" value="${answer.isCorrect}" id="answer-${it}">
+        <label class="artist__name" ${this.debag && answer.isCorrect === true ? this.debagStyle : ``}  for="answer-${it}">
+          <img class="artist__picture" src="${answer.image.url}" alt="${answer.title}">
+          ${answer.title}
         </label>
       </div>`;
   }
@@ -55,11 +55,10 @@ export default class ViewLevelArtist extends View {
     });
 
     for (const answer of gameArtistAnswers) {
-      answer.addEventListener(`click`, (event) => {
-        event.preventDefault();
-        const correctResult = answer.value === this.level.question.name;
+      answer.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        const correctResult = answer.value === `true`;
         this.onAnswerClick(correctResult);
-
         gameArtistForm.reset();
       });
     }
