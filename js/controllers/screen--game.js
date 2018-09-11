@@ -1,12 +1,11 @@
 import ViewHeader from '../view/view--header';
 import ViewLevelArtist from '../view/view--level-artist';
 import ViewLevelGenre from '../view/view--level-genre';
-import ResetModalScreen from './screen--modal-reset';
+import ViewModalReset from '../view/view--modal-reset';
 import Router from '../router';
 import {user, SECOND} from '../data/game-data';
 import {calculatePoints} from '../bisness-logic/calculate-points';
 import {mainElement} from '../utils';
-
 
 export default class GameScreen {
   constructor(model) {
@@ -17,7 +16,7 @@ export default class GameScreen {
 
   init() {
     this.header = new ViewHeader(this.model.state);
-    this.modal = new ResetModalScreen();
+    this.modal = new ViewModalReset();
     this.levelType(this.model.levelGame);
     this.mainElement = mainElement;
     this.second = SECOND;
@@ -53,16 +52,23 @@ export default class GameScreen {
     user.clear();
   }
 
-  endGame() {
-    this.restart();
-    Router.showFailTime();
+  showModal() {
+    this.modal.showModal();
+    this.modal.onConfirm = () => {
+      this.stopTimer();
+      Router.start();
+      this.modal.closeModal();
+    };
+    this.modal.onCancel = () => {
+      this.modal.closeModal();
+      this.startTimer();
+    };
   }
 
   bind() {
     this.header.restartGame = () => {
+      this.showModal();
       this.stopTimer();
-      this.modal.element.classList.remove(`modal--hidden`);
-      this.level.element.insertBefore(this.modal.element, this.root.element);
     };
   }
 
@@ -70,7 +76,6 @@ export default class GameScreen {
     this.header = new ViewHeader(this.model.state);
     this.level.element.replaceChild(this.header.element, this.level.element.firstElementChild);
     this.header.element.restartGame = this.bind();
-    // this.header.element.timeEnd = this.endGame();
   }
 
   levelType(level) {
@@ -85,12 +90,7 @@ export default class GameScreen {
   }
 
   changeLevel(level) {
-    if (level instanceof ViewLevelGenre) {
-      level.onAnswerClick = this.answerGenre.bind(this);
-    }
-    if (level instanceof ViewLevelArtist) {
-      level.onAnswerClick = this.answerArtist.bind(this);
-    }
+    level.onAnswerClick = this.answerLevel.bind(this);
     this.changeLevelContent(level);
   }
 
@@ -104,7 +104,6 @@ export default class GameScreen {
       this.model.nextLevel();
       this.levelType(this.model.levelGame);
       this.changeLevel(this.level);
-      this.updateHeader();
       this.startTimer();
     } else {
       this.model.result = {
@@ -116,30 +115,9 @@ export default class GameScreen {
     }
   }
 
-  answerGenre(answers) {
+  answerLevel(answer) {
     this.stopTimer();
-    const userAnswers = answers.filter((it) => it.checked);
-    const correctResult = userAnswers.some((it) => it.value === this.model.levelGame.answer);
-
-    if (correctResult) {
-      user.add({result: true, time: this.model.state.time});
-    } else {
-      try {
-        this.model.die();
-        user.add({result: false, time: this.model.state.time});
-      } catch (e) {
-        Router.showFailTries();
-        return;
-      }
-    }
-    this.validateLevel();
-  }
-
-  answerArtist(answer) {
-    this.stopTimer();
-    const correctResult = answer.value === this.model.levelGame.question.name;
-
-    if (correctResult) {
+    if (answer) {
       user.add({result: true, time: this.model.state.time});
     } else {
       try {

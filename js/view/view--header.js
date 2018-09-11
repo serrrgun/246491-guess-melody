@@ -1,6 +1,7 @@
 import View from './view';
 import {getRadius, FULL_TIME, RADIUS, MIN_TIME} from "../bisness-logic/timer-circle";
 import {getMin, getSec} from "../bisness-logic/change-time";
+import Router from "../router";
 
 export default class ViewHeader extends View {
   constructor(state) {
@@ -61,5 +62,8 @@ export default class ViewHeader extends View {
   }
 
   restartGame() {}
-  timeEnd() {}
+
+  timeEnd() {
+    Router.showFailTime();
+  }
 }

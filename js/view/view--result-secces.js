@@ -1,7 +1,6 @@
 import View from './view';
 import {FULL_TIME} from "../data/game-data";
 import {formatWord} from "../bisness-logic/declension-word";
-import {getMin, getSec} from "../bisness-logic/change-time";
 
 export default class ViewResultSuccess extends View {
   constructor(model) {
@@ -12,8 +11,8 @@ export default class ViewResultSuccess extends View {
     this.game = model.state;
     this.fullTime = FULL_TIME;
     this._time = this.fullTime - this.game.time;
-    this.min = getMin(this._time);
-    this.sec = getSec(this._time);
+    this.min = Math.floor(this._time / 60);
+    this.sec = Math.floor(this._time % 60);
   }
 
   get template() {

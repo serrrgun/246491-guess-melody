@@ -13,25 +13,25 @@ export default class ViewLevelGenre extends View {
     return `
     <section class="game game--genre">
       <section class="game__screen">
-        <h2 class="game__title">${this.level.title}</h2>
+        <h2 class="game__title">${this.level.question}</h2>
         <form class="game__tracks">
-           ${this.level.questions.map((question, it) => this.templateAnswer(question, it).trim()).join(``)}
+           ${this.level.answers.map((answer, it) => this.templateAnswer(answer, it).trim()).join(``)}
            <button class="game__submit button" type="submit" disabled>Ответить</button>
         </form>
       </section>
     </section>`;
   }
 
-  templateAnswer(question, it) {
+  templateAnswer(answer, it) {
     return `
       <div class="track">
         <button class="track__button track__button--play" type="button"></button>
         <div class="track__status">
-          <audio src="${question.src}"></audio>
+          <audio src="${answer.src}"></audio>
         </div>
         <div class="game__answer">
-          <input class="game__input visually-hidden" type="checkbox" name="answer" value="${question.genre}" id="answer-${it}">
-          <label class="game__check" ${this.debag && question.genre === this.level.answer ? this.debagStyle : ``} for="answer-${it}">Отметить</label>
+          <input class="game__input visually-hidden" type="checkbox" name="answer" value="${answer.genre}" id="answer-${it}">
+          <label class="game__check" ${this.debag && answer.genre === this.level.genre ? this.debagStyle : ``} for="answer-${it}">Отметить</label>
         </div>
       </div>`;
   }
@@ -43,6 +43,12 @@ export default class ViewLevelGenre extends View {
 
     const playButtons = [...this.element.querySelectorAll(`.track__button`)];
     const musicsPlayers = [...this.element.querySelectorAll(`audio`)];
+    playButtons[0].classList.add(`track__button--pause`);
+    const promise = musicsPlayers[0].play();
+
+    if (promise) {
+      promise.catch(() => {});
+    }
 
     playButtons.forEach((btn, index) => {
       btn.addEventListener(`click`, (event) => {
@@ -58,7 +64,7 @@ export default class ViewLevelGenre extends View {
           }
 
           btn.classList.add(`track__button--pause`);
-          musicsPlayers[index].play();
+          musicsPlayers[index].play().catch(() => ({}));
         }
       });
     });
@@ -71,7 +77,8 @@ export default class ViewLevelGenre extends View {
 
     sendButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.onAnswerClick(gameGenreAnswers);
+      const userAnswers = gameGenreAnswers.filter((it) => it.checked).some((it) => it.value === this.level.genre);
+      this.onAnswerClick(userAnswers);
       gameGenreForm.reset();
       sendButton.disabled = true;
     });
