@@ -37,7 +37,7 @@ export default class Router {
   }
 
   static showResult(model) {
-    const splash = new SplashScreen();
+    const splash = new ViewSplash();
     changeScreen(splash.element);
     Loader.saveResults(model.dataGame)
       .then(() => Loader.loadResults())
