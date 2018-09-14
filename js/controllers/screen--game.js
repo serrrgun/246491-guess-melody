@@ -106,7 +106,7 @@ export default class GameScreen {
       this.changeLevel(this.level);
       this.startTimer();
     } else {
-      this.model.result = {
+      this.model.gameUser = {
         score: calculatePoints([...user], this.model.state.lives),
         lives: this.model.state.lives,
         time: this.model.state.time,
