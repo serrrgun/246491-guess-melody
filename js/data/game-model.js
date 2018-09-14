@@ -32,7 +32,6 @@ export default class GameModel {
     this._game = user;
   }
 
-
   getEndGame(data) {
     const statistic = data.map((it) => it.score);
     return {
