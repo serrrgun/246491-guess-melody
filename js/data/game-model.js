@@ -1,4 +1,4 @@
-import {INITIAL_GAME, statistic} from './game-data';
+import {FULL_TIME, INITIAL_GAME} from './game-data';
 import {changeLevel} from '../bisness-logic/level-selection';
 import {showResult} from '../bisness-logic/show-user-result';
 import {reductionLives} from '../bisness-logic/reduction-lives';
@@ -13,24 +13,33 @@ export default class GameModel {
     return this._state;
   }
 
-  get result() {
-    return this._showResalt;
+  get gameUser() {
+    return this._game;
   }
 
-  get scoring() {
-    return this._showResalt.score;
-  }
-
-  set result(user) {
-    this._showResalt = user;
-  }
-
-  get endGame() {
-    return showResult(statistic, this.result);
+  get dataGame() {
+    return {
+      time: FULL_TIME - this._state.time,
+      score: this.gameUser.score,
+    };
   }
 
   get levelGame() {
     return this.data[this._state.level];
+  }
+
+  set gameUser(user) {
+    this._game = user;
+  }
+
+  getEndGame(data) {
+    const statistic = data.map((it) => it.score);
+    return {
+      score: this.gameUser.score,
+      time: FULL_TIME - this._state.time,
+      lives: this._state.lives,
+      text: showResult(statistic, this.gameUser)
+    };
   }
 
   restart() {

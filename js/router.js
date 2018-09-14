@@ -5,37 +5,24 @@ import ResultFailScreen from './controllers/screen--result-fail_tries';
 import ResultFailTimeScreen from './controllers/screen--result-fail_time';
 import ResultScreen from './controllers/screen--result-secces';
 import {changeScreen} from './utils';
-import SplashScreen from './view/view-splash';
+import ViewSplash from './view/view-splash';
 import ViewError from './view/view--modal-error';
+import Loader from './loader';
 
-
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
-};
-
-const GET_URL = `https://es.dump.academy/guess-melody/questions`;
 let questData;
 
 export default class Router {
 
   static start() {
-    const splash = new SplashScreen();
+    const splash = new ViewSplash();
     changeScreen(splash.element);
-    splash.start();
-    fetch(GET_URL).
-      then(checkStatus).
-      then((response) => response.json()).
+
+    Loader.loadData().
       then((data) => {
         questData = data;
-        return questData;
       }).
       then(Router.showWelcome).
-      catch(Router.showError).
-      then(() => splash.stop());
+      catch(Router.showError);
   }
 
   static showWelcome() {
@@ -50,8 +37,12 @@ export default class Router {
   }
 
   static showResult(model) {
-    const resultGame = new ResultScreen(model);
-    changeScreen(resultGame.element);
+    const splash = new ViewSplash();
+    changeScreen(splash.element);
+    Loader.saveResults(model.dataGame)
+      .then(() => Loader.loadResults())
+      .then((data) => changeScreen(new ResultScreen(model.getEndGame(data)).element))
+      .catch(Router.showError);
   }
 
   static showFailTries() {

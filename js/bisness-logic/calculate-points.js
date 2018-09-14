@@ -1,5 +1,12 @@
 import {INITIAL_GAME} from "../data/game-data";
 
+const Points = {
+  DEFAULT: 1,
+  FAST: 2,
+  WRONG: -2
+};
+
+
 export const calculatePoints = (answersUsers, lives) => {
   if (!Array.isArray(answersUsers)) {
     throw new Error(`The first parameter must be an array`);
@@ -20,12 +27,10 @@ export const calculatePoints = (answersUsers, lives) => {
   let points = 0;
 
   for (let answer of answersUsers) {
-    if (answer.result && INITIAL_GAME.time - answer.time >= BEST_TIME) {
-      points += 1;
-    } else if (answer.result && INITIAL_GAME.time - answer.time < BEST_TIME) {
-      points += 2;
+    if (answer.result) {
+      points += INITIAL_GAME.time - answer.time >= BEST_TIME ? Points.DEFAULT : Points.FAST;
     } else if (!(answer.result)) {
-      points -= 2;
+      points += Points.WRONG;
     }
   }
 
