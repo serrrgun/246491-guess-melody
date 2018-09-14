@@ -1,23 +1,20 @@
 import AbstractView from './view';
 
-export default class SplashScreen extends AbstractView {
-  constructor() {
-    super();
-    this.cursor = 0;
-    this.symbolsSeq = `/—\\|`;
-  }
+export default class ViewSplash extends AbstractView {
 
   get template() {
-    return `<div></div>`;
+    return `
+     <div class="load">
+       <div>G</div>
+       <div>N</div>
+       <div>I</div>
+       <div>D</div>
+       <div>A</div>
+       <div>O</div>
+       <div>L</div>
+     </div>
+    `;
   }
 
-  start() {
-    this.cursor = ++this.cursor >= this.symbolsSeq.length ? 0 : this.cursor;
-    this.element.textContent = this.symbolsSeq[this.cursor];
-    this.timeout = setTimeout(() => this.start(), 50);
-  }
-
-  stop() {
-    clearTimeout(this.timeout);
-  }
+  bind() {}
 }

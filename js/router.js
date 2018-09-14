@@ -5,7 +5,7 @@ import ResultFailScreen from './controllers/screen--result-fail_tries';
 import ResultFailTimeScreen from './controllers/screen--result-fail_time';
 import ResultScreen from './controllers/screen--result-secces';
 import {changeScreen} from './utils';
-import SplashScreen from './view/view-splash';
+import ViewSplash from './view/view-splash';
 import ViewError from './view/view--modal-error';
 import Loader from './loader';
 
@@ -14,7 +14,7 @@ let questData;
 export default class Router {
 
   static start() {
-    const splash = new SplashScreen();
+    const splash = new ViewSplash();
     changeScreen(splash.element);
 
     Loader.loadData().
