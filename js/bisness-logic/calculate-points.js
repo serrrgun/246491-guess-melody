@@ -6,7 +6,6 @@ const Points = {
   WRONG: -2
 };
 
-
 export const calculatePoints = (answersUsers, lives) => {
   if (!Array.isArray(answersUsers)) {
     throw new Error(`The first parameter must be an array`);
@@ -33,7 +32,6 @@ export const calculatePoints = (answersUsers, lives) => {
       points += Points.WRONG;
     }
   }
-
   return points;
 };
 
