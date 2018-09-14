@@ -13,22 +13,8 @@ export default class GameModel {
     return this._state;
   }
 
-  set gameUser(user) {
-    this._game = user;
-  }
-
   get gameUser() {
     return this._game;
-  }
-
-  getEndGame(data) {
-    const statistic = data.map((it) => it.score);
-    return {
-      score: this.gameUser.score,
-      time: FULL_TIME - this._state.time,
-      lives: this._state.lives,
-      text: showResult(statistic, this.gameUser)
-    };
   }
 
   get dataGame() {
@@ -40,6 +26,21 @@ export default class GameModel {
 
   get levelGame() {
     return this.data[this._state.level];
+  }
+
+  set gameUser(user) {
+    this._game = user;
+  }
+
+
+  getEndGame(data) {
+    const statistic = data.map((it) => it.score);
+    return {
+      score: this.gameUser.score,
+      time: FULL_TIME - this._state.time,
+      lives: this._state.lives,
+      text: showResult(statistic, this.gameUser)
+    };
   }
 
   restart() {
