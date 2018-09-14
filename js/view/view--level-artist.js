@@ -1,5 +1,6 @@
 import View from './view';
 import {DEBAG, DEBUG_STYLE_ARTIST} from "../setting";
+import {playerArtist, playTrack} from "../controllers/player";
 
 export default class ViewLevelArtist extends View {
   constructor(level) {
@@ -14,10 +15,7 @@ export default class ViewLevelArtist extends View {
     <section class="game game--artist">
       <section class="game__screen">
         <h2 class="game__title">${this.level.question}</h2>
-        <div class="game__track">
-          <button class="track__button track__button--play track__button--pause" type="button"></button>
-          <audio src="${this.level.src}" autoplay></audio>
-        </div>
+        ${playerArtist(this.level.src)}
         <form class="game__artist">
           ${this.level.answers.map((answer, it) => this.templateAnswer(answer, it).trim()).join(``)}
         </form>
@@ -39,20 +37,9 @@ export default class ViewLevelArtist extends View {
   bind() {
     const gameArtistForm = this.element.querySelector(`.game__artist`);
     const gameArtistAnswers = [...gameArtistForm.elements.answer];
+    const tracks = [...this.element.querySelectorAll(`.game__track`)];
 
-    const playButtons = this.element.querySelector(`.track__button`);
-    const audioPlayer = this.element.querySelector(`audio`);
-
-    playButtons.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      playButtons.classList.toggle(`track__button--pause`);
-
-      if (playButtons.classList.contains(`track__button--pause`)) {
-        audioPlayer.play();
-      } else {
-        audioPlayer.pause();
-      }
-    });
+    playTrack(tracks);
 
     for (const answer of gameArtistAnswers) {
       answer.addEventListener(`click`, (evt) => {
