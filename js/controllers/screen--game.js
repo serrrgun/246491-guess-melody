@@ -17,7 +17,7 @@ export default class GameScreen {
   init() {
     this.header = new ViewHeader(this.model.state);
     this.modal = new ViewModalReset();
-    this.levelType(this.model.levelGame);
+    this._levelType(this.model.levelGame);
     this.mainElement = mainElement;
     this.second = SECOND;
     this.root = document.createElement(`div`);
@@ -29,30 +29,30 @@ export default class GameScreen {
     return this.root;
   }
 
-  startTimer() {
+  _startTimer() {
     this.timer = setTimeout(() => {
       this.model.tick();
-      this.updateHeader();
-      this.startTimer();
+      this._updateHeader();
+      this._startTimer();
     }, this.second);
   }
 
-  stopTimer() {
+  _stopTimer() {
     clearTimeout(this.timer);
   }
 
   startGame() {
-    this.restart();
-    this.changeLevel(this.level);
-    this.startTimer();
+    this._restart();
+    this._changeLevel(this.level);
+    this._startTimer();
   }
 
-  restart() {
+  _restart() {
     this.model.restart();
     user.clear();
   }
 
-  showModal() {
+  _showModal() {
     this.modal.showModal();
     this.modal.onConfirm = () => {
       this.stopTimer();
@@ -61,24 +61,24 @@ export default class GameScreen {
     };
     this.modal.onCancel = () => {
       this.modal.closeModal();
-      this.startTimer();
+      this._startTimer();
     };
   }
 
   bind() {
     this.header.restartGame = () => {
-      this.showModal();
-      this.stopTimer();
+      this._showModal();
+      this._stopTimer();
     };
   }
 
-  updateHeader() {
+  _updateHeader() {
     this.header = new ViewHeader(this.model.state);
     this.level.element.replaceChild(this.header.element, this.level.element.firstElementChild);
     this.header.element.restartGame = this.bind();
   }
 
-  levelType(level) {
+  _levelType(level) {
     switch (level.type) {
       case `genre`:
         this.level = new ViewLevelGenre(level);
@@ -89,22 +89,22 @@ export default class GameScreen {
     }
   }
 
-  changeLevel(level) {
+  _changeLevel(level) {
     level.onAnswerClick = this.answerLevel.bind(this);
-    this.changeLevelContent(level);
+    this._changeLevelContent(level);
   }
 
-  changeLevelContent(view) {
+  _changeLevelContent(view) {
     view.element.insertBefore(this.header.element, view.element.firstElementChild);
     this.mainElement.replaceChild(view.element, this.mainElement.firstElementChild);
   }
 
-  validateLevel() {
+  _validateLevel() {
     if (this.model.hasNextLevel()) {
       this.model.nextLevel();
-      this.levelType(this.model.levelGame);
-      this.changeLevel(this.level);
-      this.startTimer();
+      this._levelType(this.model.levelGame);
+      this._changeLevel(this.level);
+      this._startTimer();
     } else {
       this.model.gameUser = {
         score: calculatePoints([...user], this.model.state.lives),
@@ -116,7 +116,7 @@ export default class GameScreen {
   }
 
   answerLevel(answer) {
-    this.stopTimer();
+    this._stopTimer();
     if (answer) {
       user.add({result: true, time: this.model.state.time});
     } else {
@@ -128,6 +128,6 @@ export default class GameScreen {
         return;
       }
     }
-    this.validateLevel();
+    this._validateLevel();
   }
 }
