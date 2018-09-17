@@ -1,4 +1,5 @@
 import View from './view';
+import Router from "../router";
 
 export default class ViewWelcome extends View {
   get template() {
@@ -19,8 +20,9 @@ export default class ViewWelcome extends View {
 
   bind() {
     this.playGameButton = this.element.querySelector(`.welcome__button`);
-    this.playGameButton.addEventListener(`click`, this.onPlayClick);
+    this.playGameButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      Router.showGame();
+    });
   }
-
-  onPlayClick() {}
 }

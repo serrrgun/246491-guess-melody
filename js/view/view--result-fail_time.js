@@ -1,4 +1,5 @@
 import AbstractView from './view';
+import Router from "../router";
 
 export default class ViewResultFailTime extends AbstractView {
 
@@ -14,6 +15,9 @@ export default class ViewResultFailTime extends AbstractView {
 
   bind() {
     this.replayButton = this.element.querySelector(`.result__replay`);
-    this.replayButton.addEventListener(`click`, this.onClickReplay);
+    this.replayButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      Router.showGame();
+    });
   }
 }

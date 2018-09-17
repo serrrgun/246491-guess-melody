@@ -55,7 +55,7 @@ export default class GameScreen {
   _showModal() {
     this.modal.showModal();
     this.modal.onConfirm = () => {
-      this.stopTimer();
+      this._stopTimer();
       Router.start();
       this.modal.closeModal();
     };

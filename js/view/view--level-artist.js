@@ -1,6 +1,6 @@
 import View from './view';
 import {DEBAG, DEBUG_STYLE_ARTIST} from "../setting";
-import {playerArtist, playTrack} from "../controllers/player";
+import {playerArtist, playTrack} from "../player";
 
 export default class ViewLevelArtist extends View {
   constructor(level) {

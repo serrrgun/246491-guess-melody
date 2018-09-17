@@ -1,13 +1,13 @@
 import GameModel from './data/game-model';
 import GameScreen from './controllers/screen--game';
-import WelcomeScreen from './controllers/screen--welcome';
-import ResultFailScreen from './controllers/screen--result-fail_tries';
-import ResultFailTimeScreen from './controllers/screen--result-fail_time';
-import ResultScreen from './controllers/screen--result-secces';
 import {changeScreen} from './utils';
 import ViewSplash from './view/view-splash';
 import ViewError from './view/view--modal-error';
 import Loader from './loader';
+import ViewResultFailTime from "./view/view--result-fail_time";
+import ViewWelcome from "./view/view--welcome";
+import ViewResultFail from "./view/view--result-fail_tries";
+import ViewResultSuccess from "./view/view--result-secces";
 
 let questData;
 
@@ -26,7 +26,7 @@ export default class Router {
   }
 
   static showWelcome() {
-    const welcomeScreen = new WelcomeScreen();
+    const welcomeScreen = new ViewWelcome();
     changeScreen(welcomeScreen.element);
   }
 
@@ -41,17 +41,17 @@ export default class Router {
     changeScreen(splash.element);
     Loader.saveResults(model.dataGame)
       .then(() => Loader.loadResults())
-      .then((data) => changeScreen(new ResultScreen(model.getEndGame(data)).element))
+      .then((data) => changeScreen(new ViewResultSuccess(model.getEndGame(data)).element))
       .catch(Router.showError);
   }
 
   static showFailTries() {
-    const failTries = new ResultFailScreen();
+    const failTries = new ViewResultFail();
     changeScreen(failTries.element);
   }
 
   static showFailTime() {
-    const timeTries = new ResultFailTimeScreen();
+    const timeTries = new ViewResultFailTime();
     changeScreen(timeTries.element);
   }
 

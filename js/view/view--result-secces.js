@@ -1,5 +1,6 @@
 import View from './view';
 import {formatWord} from "../bisness-logic/declension-word";
+import Router from "../router";
 
 export default class ViewResultSuccess extends View {
   constructor(model) {
@@ -28,9 +29,7 @@ export default class ViewResultSuccess extends View {
     const replayButton = this.element.querySelector(`.result__replay`);
     replayButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.onClickReplay();
+      Router.showWelcome();
     });
   }
-
-  onClickReplay() {}
 }

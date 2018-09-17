@@ -1,6 +1,6 @@
 import View from './view';
 import {DEBAG, DEBUG_STYLE_GENRE} from "../setting";
-import {playerGenre, playTrack} from "../controllers/player";
+import {playerGenre, playTrack} from "../player";
 
 export default class ViewLevelGenre extends View {
   constructor(level) {
